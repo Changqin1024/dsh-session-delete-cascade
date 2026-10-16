@@ -1,0 +1,4 @@
+{
+  "title": "Delete session",
+  "description": "Adds a Delete action to the sidebar session menu: confirm, then remove the session's durable log, cached projections, search-index rows, and workspace accounting."
+}

@@ -1,0 +1,68 @@
+{
+  "name": "dsh-session-delete-cascade",
+  "version": "1.0.1",
+  "type": "module",
+  "description": "DeepSeek Harness plugin: delete a session from the sidebar and cascade the delete through its subagent lineage — durable log, cached projections, search-index rows and workspace accounting.",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-bundle",
+    "cordis",
+    "session",
+    "delete",
+    "cascade",
+    "subagent",
+    "cleanup"
+  ],
+  "license": "MIT",
+  "author": "Changqin1024",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Changqin1024/dsh-session-delete-cascade.git"
+  },
+  "homepage": "https://github.com/Changqin1024/dsh-session-delete-cascade#readme",
+  "bugs": {
+    "url": "https://github.com/Changqin1024/dsh-session-delete-cascade/issues"
+  },
+  "engines": {
+    "node": ">=22",
+    "dsh": ">=0.2.0-rc.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "title": "删除会话（级联）/ Delete session (cascade)",
+    "description": "在侧栏会话菜单中添加「删除会话」，连同子代理子孙一起删除。"
+  },
+  "icon": "./icon.svg",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}
