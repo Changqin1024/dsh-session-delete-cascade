@@ -1,6 +1,6 @@
 {
   "name": "dsh-session-delete-cascade",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "type": "module",
   "description": "DeepSeek Harness plugin: delete a session from the sidebar and cascade the delete through its subagent lineage — durable log, cached projections, search-index rows and workspace accounting.",
   "keywords": [
@@ -27,7 +27,7 @@
   },
   "engines": {
     "node": ">=22",
-    "dsh": ">=0.2.0-rc.2"
+    "dsh": ">=0.2.1-rc.2"
   },
   "publishConfig": {
     "access": "public"
