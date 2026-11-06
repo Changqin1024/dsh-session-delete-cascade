@@ -10,7 +10,7 @@ DeepSeek Harness 出于设计考虑**只提供归档，不提供删除**——�
 
 ## 功能
 
-- **侧栏菜单项**：会话行的 `⋯` 菜单里新增「删除会话」，排在「归档会话」之后
+- **侧栏菜单项**：会话行的 `⋯` 菜单里新增「删除会话」（危险色，带图标）
 - **确认弹窗**：删之前告诉你到底会删掉什么，并**列出将被连带删除的子会话**
 - **递归删除**：连同该会话的全部子代理子孙（孙代理也删），fork 会话不受影响
 - **彻底清理**：对话日志、投影缓存、搜索索引、工作区记账，一处不留
@@ -104,14 +104,14 @@ CLI：`dsh plugin --profile <profile> remove dsh-session-delete-cascade`。
 | 文件 | 职责 |
 |---|---|
 | `lib/index.js` | Host 半边：注册 `POST /api/session-delete.delete`，血缘遍历与有序删除 |
-| `lib/client.js` | 浏览器半边：菜单行、带血缘预览的确认弹窗、结果提示（控件全部内联，无 Harness 包依赖） |
+| `lib/client.js` | 浏览器半边：菜单动作、带血缘预览的确认弹窗、结果提示（控件全部内联，无 Harness 包依赖） |
 | `cordis.patch.yml` | 插入唯一一条 Host 插件行 |
 | `package.json` | bundle 清单：`dsh.bundle.patch` + web 端 `dsh.client` 配置 |
 | `icon.svg`、`locale/*.json` | 插件管理页卡片元数据 |
 
 ## 验证清单
 
-1. 侧栏悬停任一有内容的会话行，打开 `⋯` 菜单：**删除会话**是最后一项
+1. 侧栏悬停任一有内容的会话行，打开 `⋯` 菜单：能看到红字的**删除会话**
 2. 在一个有子代理的会话上点它：弹窗会写明保留边界，并列出将一并删除的子会话
 3. 确认后：血缘里每一行都从侧栏消失，对应的 `~/.dsh/sessions/<项目>/<会话ID>/` 目录都不在了
 4. 同一父会话 fork 出来的会话仍在侧栏
@@ -123,6 +123,7 @@ CLI：`dsh plugin --profile <profile> remove dsh-session-delete-cascade`。
 - 血缘按持久化 header 遍历，因此**只覆盖已经落盘的会话**；纯内存中尚未 materialize 的子会话若不在 `session.list()` 里，不会被遍历到（实际使用中子会话总是先落盘）
 - 删除是"整条血缘全或无"：任何一个后代在跑，整条都删不了。这是刻意的，半删会留下指向不存在父级的孤儿
 - 客户端界面控件是内联实现而非复用宿主组件库。若 DSH 未来改动这些控件的视觉规范，插件需要跟进；代价换来的是不受宿主包变动影响
+- 菜单动作通过 `ctx.contextMenus.register()` 贡献（`dsh.client.inject` 里声明 `@deepseek-ai/dsh-client-ui-context-menu`）。菜单里各动作的先后由 DSH 自己排布，插件不承诺具体位置
 
 ## 许可
 
